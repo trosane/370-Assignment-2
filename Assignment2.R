@@ -18,7 +18,6 @@
 numArticles <- c(3, 2, 5, 1, 2, 1)
 rowCount <- 6
 
-rawMatrix <- mat.or.vec(6, 6)
 rawMatrix[1,1] = 1
 rawMatrix[1,2] = 0
 rawMatrix[1,3] = 2
@@ -85,10 +84,8 @@ for (i in 1:rowCount) {
   } else {
     dangle[i] <- 1
   }
+  normalizedMatrix <- diagonalAdjustMatrix
 }
-
-normalizedMatrix <- diagonalAdjustMatrix
-normalizedMatrix
 
 sumOfArticles <- sum(numArticles)
 
@@ -98,3 +95,33 @@ for (i in 1:length(numArticles)) {
 }
 sum <- sum(numArticles) #initial start vector
 numArticles
+
+initialVector <- c()
+for (i in 1:rowCount) {
+  initialVector[i] = 1 / rowCount
+}
+
+length(numArticles)
+length(diagonalAdjustMatrix)
+
+diagonalAdjustMatrix
+diagonalAdjustMatrix[1,]
+diagonalAdjustMatrix[,1]
+
+for (i in 1:rowCount) {
+  if (dangle[i] == 1) {
+    normalizedMatrix[,i] = numArticles
+  }
+}
+
+normalizedMatrix
+aeT <- mat.or.vec(6, 6)
+
+for (i in 1:rowCount) {
+  for (k in 1:rowCount) {
+    aeT[i,k] = numArticles[i]
+  }
+}
+
+P <- (0.85*normalizedMatrix+(0.15)*aeT)
+P
