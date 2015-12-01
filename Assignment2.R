@@ -88,13 +88,12 @@ for (i in 1:rowCount) {
 primeMatrix <- normalizedMatrix
 sumOfArticles <- sum(numArticles)
 
-
 for (i in 1:length(numArticles)) {
   numArticles[i] = numArticles[i] / sumOfArticles
 }
 sum <- sum(numArticles)
 
-initialVector <- c() #inital start vector
+initialVector <- mat.or.vec(6,1) #inital start vector
 for (i in 1:rowCount) {
   initialVector[i] = 1 / rowCount
 }
@@ -106,15 +105,14 @@ for (i in 1:rowCount) {
 }
 
 primeMatrix
+alpha <- 0.85 
+epsilon <- 0.0001 
+H <- normalizedMatrix 
+pi_K <- initialVector
+d <- dangle
+a <- numArticles
 
-#calculating influence vector
 
-aeT <- mat.or.vec(6, 6)
+ahpik <- alpha*H%*%pi_K
+adpik <- alpha*d%*%pi_K
 
-for (i in 1:rowCount) {
-  for (k in 1:rowCount) {
-    aeT[i,k] = numArticles[i]
-  }
-}
-
-P <- (0.85*primeMatrix+(0.15)*aeT)
