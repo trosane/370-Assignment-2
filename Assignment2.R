@@ -70,20 +70,23 @@ sums <- colSums(diagonalAdjustMatrix)
 
 diagonalAdjustMatrix
 sums
-
-flag <- FALSE
+dangle <- sums
 
 for (i in 1:rowCount) {
   for (k in 1:rowCount) {
     if (diagonalAdjustMatrix[i,k] != 0) {
       diagonalAdjustMatrix[i,k] <- (diagonalAdjustMatrix[i,k]/sums[k])
-    } else {
-
-    }
+    } 
+  }
+  if (sums[i] != 0) {
+    dangle[i] <- 0
+  } else {
+    dangle[i] <- 1
   }
 }
 
 normalizedMatrix <- diagonalAdjustMatrix
 normalizedMatrix
+
 
 
