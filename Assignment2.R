@@ -14,9 +14,11 @@
 #B[2,3] = 2
 
 #A%*%B
-
+rawMatrix <- mat.or.vec(6, 6)
 numArticles <- c(3, 2, 5, 1, 2, 1)
 rowCount <- 6
+a <- 0.85
+e <- 0.0001
 
 rawMatrix[1,1] = 1
 rawMatrix[1,2] = 0
@@ -55,7 +57,7 @@ rawMatrix[6,4] = 0
 rawMatrix[6,5] = 0
 rawMatrix[6,6] = 0
 
-diagonalAdjustMatrix = rawMatrix
+diagonalAdjustMatrix <- rawMatrix
 
 for (i in 1:rowCount) {
   for (k in 1:rowCount) {
@@ -65,11 +67,7 @@ for (i in 1:rowCount) {
   }
 }
 
-sums <- colSums(diagonalAdjustMatrix)
-
-diagonalAdjustMatrix
-sums
-
+sums <- colSums(diagonalAdjustMatrix) #sums of columns
 
 dangle <- sums
 
@@ -79,7 +77,7 @@ for (i in 1:rowCount) {
       diagonalAdjustMatrix[i,k] <- (diagonalAdjustMatrix[i,k]/sums[k])
     } 
   }
-  if (sums[i] != 0) {
+  if (sums[i] != 0) { #dangling nodes
     dangle[i] <- 0
   } else {
     dangle[i] <- 1
@@ -87,34 +85,30 @@ for (i in 1:rowCount) {
   normalizedMatrix <- diagonalAdjustMatrix
 }
 
+primeMatrix <- normalizedMatrix
 sumOfArticles <- sum(numArticles)
 
 
 for (i in 1:length(numArticles)) {
   numArticles[i] = numArticles[i] / sumOfArticles
 }
-sum <- sum(numArticles) #initial start vector
-numArticles
+sum <- sum(numArticles)
 
-initialVector <- c()
+initialVector <- c() #inital start vector
 for (i in 1:rowCount) {
   initialVector[i] = 1 / rowCount
 }
 
-length(numArticles)
-length(diagonalAdjustMatrix)
-
-diagonalAdjustMatrix
-diagonalAdjustMatrix[1,]
-diagonalAdjustMatrix[,1]
-
 for (i in 1:rowCount) {
   if (dangle[i] == 1) {
-    normalizedMatrix[,i] = numArticles
+    primeMatrix[,i] <- numArticles
   }
 }
 
-normalizedMatrix
+primeMatrix
+
+#calculating influence vector
+
 aeT <- mat.or.vec(6, 6)
 
 for (i in 1:rowCount) {
@@ -123,5 +117,4 @@ for (i in 1:rowCount) {
   }
 }
 
-P <- (0.85*normalizedMatrix+(0.15)*aeT)
-P
+P <- (0.85*primeMatrix+(0.15)*aeT)
