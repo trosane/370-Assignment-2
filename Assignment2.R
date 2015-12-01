@@ -70,6 +70,8 @@ sums <- colSums(diagonalAdjustMatrix)
 
 diagonalAdjustMatrix
 sums
+
+
 dangle <- sums
 
 for (i in 1:rowCount) {
@@ -88,5 +90,11 @@ for (i in 1:rowCount) {
 normalizedMatrix <- diagonalAdjustMatrix
 normalizedMatrix
 
+sumOfArticles <- sum(numArticles)
 
 
+for (i in 1:length(numArticles)) {
+  numArticles[i] = numArticles[i] / sumOfArticles
+}
+sum <- sum(numArticles) #initial start vector
+numArticles
