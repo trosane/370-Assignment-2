@@ -100,3 +100,16 @@ initialVector <- c()
 for (i in 1:rowCount) {
   initialVector[i] = 1 / rowCount
 }
+
+length(numArticles)
+length(diagonalAdjustMatrix)
+
+diagonalAdjustMatrix
+diagonalAdjustMatrix[1,]
+diagonalAdjustMatrix[,1]
+
+for (i in 1:rowCount) {
+  if (dangle[i] == 1) {
+    diagonalAdjustMatrix[,i] = numArticles
+  }
+}
