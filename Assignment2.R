@@ -87,9 +87,6 @@ for (i in 1:rowCount) {
   }
 }
 
-normalizedMatrix <- diagonalAdjustMatrix
-normalizedMatrix
-
 sumOfArticles <- sum(numArticles)
 
 
@@ -98,3 +95,8 @@ for (i in 1:length(numArticles)) {
 }
 sum <- sum(numArticles) #initial start vector
 numArticles
+
+initialVector <- c()
+for (i in 1:rowCount) {
+  initialVector[i] = 1 / rowCount
+}
