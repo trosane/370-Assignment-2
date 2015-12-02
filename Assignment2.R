@@ -93,7 +93,7 @@ for (i in 1:length(numArticles)) {
 }
 sum <- sum(numArticles)
 
-initialVector <- mat.or.vec(6,1) #inital start vector
+initialVector <- mat.or.vec(6,1) #initial start vector
 for (i in 1:rowCount) {
   initialVector[i] = 1 / rowCount
 }
@@ -112,23 +112,26 @@ pi_K <- initialVector
 d <- dangle
 a <- numArticles
 
+# constructs the equation åHπ^k + [å.d.π^k + (1 - å)]a
+pi_K1 <- alpha*H%*%pi_K + (alpha*d*pi_K + 0.15)*a
 
-ahpik <- alpha*H%*%pi_K
-adpik <- alpha*d*pi_K
-right <- (adpik + 0.15)*a
-
-pi_K1 <- ahpik + right
 residual <- sum(abs(pi_K1 - pi_K))
-count <- 0
 
 while (residual > e) {
   pi_K <- pi_K1 #set pi^k+1 as the current initial start vector
   #update the equation to match the new pi^k
-  ahpik <- alpha*H%*%pi_K
-  adpik <- alpha*d*pi_K
-  right <- (adpik + 0.15)*a
   pi_K1 <- ahpik + right
   residual <- sum(abs(pi_K1 - pi_K)) #calculate new residual
+  print(residual)
 }
 
 print(pi_K1)
+
+# Vikram's code (works)
+#sum2 <- (a * (C %*% sum)) + (a*(d%*%sum) + (1-a)) * article
+#while(sum(abs(sum2 - sum)) > eps) {
+#  sum <- sum2
+#  sum2 <- (a * (C %*% sum)) + (a*(d%*%sum) + (1-a)) * article
+#}
+
+influence <- pi_K1 
