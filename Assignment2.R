@@ -1,19 +1,4 @@
-#A <- mat.or.vec(2,2)
-#B <- mat.or.vec(2,3)
 
-#A[1,1] = 1
-#A[2,1] = 2
-#A[1,2] = 0
-#A[2.2] = 2
-
-#B[1,1] = 0
-#B[1,2] = 4
-#B[1,3] = 2
-#B[2,1] = 1
-#B[2,2] = 1
-#B[2,3] = 2
-
-#A%*%B
 rawMatrix <- mat.or.vec(6, 6)
 numArticles <- c(3, 2, 5, 1, 2, 1)
 rowCount <- 6
@@ -113,25 +98,15 @@ d <- dangle
 a <- numArticles
 
 # constructs the equation åHπ^k + [å.d.π^k + (1 - å)]a
-pi_K1 <- alpha*H%*%pi_K + (alpha*d*pi_K + 0.15)*a
+pi_K1 <- (alpha*H%*%pi_K) + ((alpha*(d%*%pi_K) + 0.15)*a)
 
 residual <- sum(abs(pi_K1 - pi_K))
 
 while (residual > e) {
   pi_K <- pi_K1 #set pi^k+1 as the current initial start vector
-  #update the equation to match the new pi^k
-  pi_K1 <- ahpik + right
+  pi_K1 = (alpha*H%*%pi_K) + ((alpha*(d%*%pi_K) + 0.15)*a)
   residual <- sum(abs(pi_K1 - pi_K)) #calculate new residual
-  print(residual)
 }
 
 print(pi_K1)
-
-# Vikram's code (works)
-#sum2 <- (a * (C %*% sum)) + (a*(d%*%sum) + (1-a)) * article
-#while(sum(abs(sum2 - sum)) > eps) {
-#  sum <- sum2
-#  sum2 <- (a * (C %*% sum)) + (a*(d%*%sum) + (1-a)) * article
-#}
-
-influence <- pi_K1 
+influence <- pi_K1
