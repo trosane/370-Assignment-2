@@ -114,5 +114,21 @@ a <- numArticles
 
 
 ahpik <- alpha*H%*%pi_K
-adpik <- alpha*d%*%pi_K
+adpik <- alpha*d*pi_K
+right <- (adpik + 0.15)*a
 
+pi_K1 <- ahpik + right
+residual <- sum(abs(pi_K1 - pi_K))
+count <- 0
+
+while (residual > e) {
+  pi_K <- pi_K1 #set pi^k+1 as the current initial start vector
+  #update the equation to match the new pi^k
+  ahpik <- alpha*H%*%pi_K
+  adpik <- alpha*d*pi_K
+  right <- (adpik + 0.15)*a
+  pi_K1 <- ahpik + right
+  residual <- sum(abs(pi_K1 - pi_K)) #calculate new residual
+}
+
+print(pi_K1)
